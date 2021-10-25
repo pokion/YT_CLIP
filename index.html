@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>YT Downloader</title>
+	<link rel="stylesheet" type="text/css" href="nouislider.min.css">
+	<link rel="stylesheet" type="text/css" href="main.css">
+	<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap" rel="stylesheet"> 
+</head>
+<body>
+
+	<div id="loader" class="noVisibility">
+		<div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+	</div>
+
+	<div class="center first">
+		<h1>Download video from YouTube</h1>
+
+		<input type="text" placeholder="Paste your link" name="url">
+		<br>
+		<button>Add</button>
+	</div>
+
+
+	<div class="center noVisibility">
+		<i class="arrow left"></i>
+
+		<div class="box">
+			<h2 id="title"></h2>
+			<img id="img" src="">
+		</div>
+		
+		<br>
+		
+		<div class="box">
+
+			<div id="sliderBox">
+				<div id="slider" class="disabled"></div>
+			</div>
+
+			<div class="inputBox">
+				<input type="checkbox" name="trim">
+				<p>Trim video</p>
+			</div>
+
+		</div>
+		<br>
+		<button>Download</button>
+		<br>
+		<br>
+		<p>This may take a while.</p>
+	</div>
+
+<script src="nouislider.min.js"></script>
+<script src="main.js"></script>
+<script src="ajax.js"></script>
+
+</body>
+</html>

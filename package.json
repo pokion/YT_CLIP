@@ -1,0 +1,20 @@
+{
+  "name": "yt_clip",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Cezary Bubieniec",
+  "license": "ISC",
+  "dependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "fluent-ffmpeg": "^2.1.2",
+    "mime": "^2.5.2",
+    "nodejs-file-downloader": "^4.7.4",
+    "ytdl-core": "^4.9.1"
+  }
+}
