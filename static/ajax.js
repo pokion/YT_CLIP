@@ -1,19 +1,17 @@
-//console.log(slider.noUiSlider.get())
 let progressInterval;
 let resp;
 
 function progress(){
 	let xmlhttp = new XMLHttpRequest();
+	let percent = document.querySelectorAll('#percent')[0]
 
 	xmlhttp.onreadystatechange = function(){
 		if(xmlhttp.readyState == XMLHttpRequest.DONE){
 			if(xmlhttp.status == 200){
 				let response = JSON.parse(xmlhttp.response);
-				console.log(response)
-				console.log(typeof(response.status.percent))
+				percent.innerHTML = response.status.percent + "%"
 				if(typeof(response.status.percent) == "object"){
-					console.log('no jest')
-					console.log(typeof(response.status.percent))
+					percent.innerHTML = ""
 					clearInterval(progressInterval);
 					download()
 				}
@@ -45,7 +43,10 @@ function download(){
 	xmlhttp.onreadystatechange = function(){
 		if(xmlhttp.readyState == XMLHttpRequest.DONE){
 			if(xmlhttp.status == 200){
-				console.log(xmlhttp.response)
+				loader.classList.toggle('noVisibility');
+	            center0.classList.toggle('noVisibility');
+				center1.classList.toggle('noVisibility');
+				loader.classList.toggle('noVisibility');
 				let a = document.createElement('a');
 				let url = window.URL.createObjectURL(xmlhttp.response)
 				a.href = url;
@@ -54,9 +55,6 @@ function download(){
 	            a.click();
 	            a.remove();
 	            window.URL.revokeObjectURL(url);
-	            loader.classList.toggle('noVisibility');
-	            center0.classList.toggle('noVisibility');
-				center1.classList.toggle('noVisibility');
 				url.value = "";
 
 			}else {
@@ -79,9 +77,6 @@ function sendRequestToDownload(){
 	let url = document.querySelectorAll('input[name="url"]')[0].value;
 	let sliderVal = slider.noUiSlider.get();
 	let trim = document.querySelectorAll('input[name="trim"]')[0].checked;
-	let title = document.querySelectorAll('#title')[0];
-	let center1 = document.querySelectorAll('.center')[1];
-	let center0 = document.querySelectorAll('.center')[0];
 	loader.classList.toggle('noVisibility');
 
 	xmlhttp.onreadystatechange = function(){
@@ -121,7 +116,6 @@ function sendURL(){
 		if(xmlhttp.readyState == XMLHttpRequest.DONE){
 			if(xmlhttp.status == 200){
 				let response = JSON.parse(xmlhttp.response);
-				console.log(response.player_response.videoDetails.thumbnail)
 				title.innerHTML = response.player_response.videoDetails.title;
 				img.src = response.player_response.videoDetails.thumbnail.thumbnails[3].url
 				center0.classList.toggle('noVisibility');

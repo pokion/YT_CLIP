@@ -22,7 +22,19 @@ app.post('/sendvid', (req, res)=>{
 
 	if(downloading[index].percent.stage == "done"){
 		res.download(downloading[index].percent.path, vidId,(err)=>{
-			console.log(err)
+			fs.unlink(downloading[index].percent.path, (err)=>{
+				if(err){
+					throw err
+				}else{
+					fs.unlink(downloading[index].percent.oldPath, (err)=>{
+						if(err){
+							throw err
+						}else{
+							downloading.splice(index,1)
+						}
+					})
+				}
+			})
 		})
 	}else{
 		res.status(404).send({
@@ -62,30 +74,31 @@ app.post('/download', (req, res)=>{
 					downloading.forEach((el,index)=>{
 						if(el.id == id){
 							place = index
-							console.log(el,index)
 						}
 					})
 					res.send({
 						id,
 						index: place
 					})
-					console.log(downloading)
+	
 					YT.download({
 						url: req.body.url,
 						directory: "./download/",
 						download: Math.floor(o) + "",
 						isPrecentage: !req.body.trim,
-						progress: (val)=>{console.log(val)
+						progress: (val)=>{
 							downloading[place].percent = val
 						},
 						onEnd: (val) => {
-							console.log('koniec',val);
 							let start = Math.floor(req.body.sliderVal[0]);
 							let duration = Math.abs(start - Math.floor(req.body.sliderVal[1]))
-							console.log(start, duration, "onEnd")
 
 							YT.trim(val.path + val.fileName + "." + val.extension, start+"", duration+"", `./${val.fileName}.${val.extension}`, ()=>{
-								downloading[place].percent = {stage: "done", path: `./${val.fileName}.${val.extension}`};
+								downloading[place].percent = {
+									stage: "done",
+									path: `./${val.fileName}.${val.extension}`,
+									oldPath: val.path + val.fileName + "." + val.extension
+								};
 
 							})
 						}
